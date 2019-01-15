@@ -2,11 +2,7 @@
 
 Vision: put in a link to media, get a link that will never die to share
 
-Most media that will be shared will already be stored
-
-if the origin of the media is still available when the link is accessed it will pass through from there, not from our storage
-
-at the time that the link is put through the system, the origin will contain the media, and will for some time after
+Media requested through the link given to users will be directed to the source if it exists (most usecases), otherwise will provide from the backup, We will make download an option to avoid streaming as much as possible, UI development will not be stopped until it is impeccable, The backend of the MERN stack shall be built to scale (mongo or cosmosdb mongo driver)
 
 people will be inclined to use a forward focused solution if it is not inconvenient
 

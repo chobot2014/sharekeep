@@ -8,10 +8,11 @@ UI development will not be stopped until it is impeccable, MERN stack, with rare
 Media types I'm thinking for MVP
   video, images
 if 💲 happens:
+
   articles, google results diff, chrome extension that let's you select a portion of your screen, hopefully finding the intended source,
   Let people sign in and have a list of all the things they've saved and shared, from every source.
   
-people will be inclined to use a forward focused solution if it is not inconvenient, make 4k+ 1 dollar a month.
+people will be inclined to use a forward focused solution if it is not inconvenient, make full quality past 1080p 1 dollar a month.
 
 
 

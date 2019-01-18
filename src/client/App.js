@@ -5,8 +5,13 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      something: ''
+      something: '',
+      mainInputValue: '',
+      isLinkValid: false,
+      getEmbedSrcLink: '',
+      isDead: false
     };
+    this.validateLink.bind(this);
   }
 
   componentDidMount() {
@@ -15,11 +20,51 @@ export default class App extends Component {
       .then(someMethodResponse => this.setState({ something: someMethodResponse.something }));
   }
 
+  mainInputValueChange(newInput) {
+    this.setState({ mainInputValue: newInput });
+  }
+
+  validateLink() {
+    if (this.state.mainInputValue !== '' && this.state.mainInputValue !== undefined) {
+      fetch('/api/getMedia', {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url: this.state.mainInputValue })
+      }).then(x => x.json())
+        .then(a => this.setState({ isLinkValid: a.isValid, getEmbedSrcLink: a.getEmbedSrcLink, isDead: a.isDead, something: 'not a space' }));
+    }
+  }
+
   render() {
     const { something } = this.state;
+
+    let video = '';
+    if (this.state.isLinkValid) {
+      if (!this.state.isDead) {
+        video = <iframe src={this.state.getEmbedSrcLink} />;
+      } else {
+        video = <video controls>
+          <source src={`/api/getDownloadedVideo?link=${this.state.mainInputValue}`} type="video/mp4" />
+        </video>;
+      }
+    }
     return (
       <div>
-        {something}
+        <input
+          style={{ 'width': '90vw' }}
+          type='input'
+          value={this.state.mainInputValue}
+          onChange={(event) => this.mainInputValueChange(event.target.value)} />
+
+        <button
+          onClick={this.validateLink.bind(this)}
+        >Validate Link</button>
+        {video}
       </div>
     );
   }

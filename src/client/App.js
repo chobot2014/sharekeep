@@ -48,10 +48,8 @@ export default class App extends Component {
       if (!this.state.isDead) {
         video = <iframe className="videoPlayer" src={this.state.getEmbedSrcLink} />;
       } else {
-        let link = `${window.location.host}/videos/${this.state.getEmbedSrcLink}`;
-        video = <video className="videoPlayer" controls>
-          <source src={link} type="video/mp4" />
-        </video>;
+        let link = `http://${window.location.host}/videos/${this.state.getEmbedSrcLink}`;
+        video = <a href={link}>Archived Video</a>;
       }
     }
     return (

@@ -33,6 +33,8 @@ app.post('/api/getMedia', (req, res) => {
     }    
     res.send(JSON.stringify({
         isValid: isValidLink,
+        // getEmbedSrcLink: savedFileName,        
+        // isDead: true
         getEmbedSrcLink: isValidLink? ytService.getEmbedSrcLink(url) : savedFileName,        
         isDead: false
     }));

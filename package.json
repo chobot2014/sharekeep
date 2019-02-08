@@ -16,6 +16,7 @@
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "express-video": "^1.0.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "ytdl-core": "^0.29.1"

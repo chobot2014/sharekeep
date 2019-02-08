@@ -1,11 +1,12 @@
 const express = require('express');
+const expressVideo = require('express-video');
 const app = express();
 const fs = require('fs');
+const path = require('path');
+const bodyParser = require('body-parser');
+const ytService = require('./services/ytDownloadService');
 
-const bodyParser = require('body-parser')
-
-const ytService = require('./services/ytDownloadService')
-
+app.use('/videos', expressVideo.stream('./tmp'));
 
 app.use(express.static('dist'));
 
@@ -22,32 +23,17 @@ function startToDownloadVideo(url) {
     return;
 }
 
-app.get('/api/getDownloadedVideo', (req, res) => {
-    let videoLink = req.param('link');
-    let id = ytService.getVideoId(videoLink);    
-    movieStream = fs.createReadStream(`./tmp/${id}.mp4`);
-    
-    movieStream.on('open', function () {
-        res.writeHead(206, {
-            "Content-Range": "bytes " + start + "-" + end + "/" + total,
-            "Accept-Ranges": "bytes",
-            "Content-Length": chunksize,
-            "Content-Type": "video/mp4"
-        });        
-        movieStream.pipe(res);
-    });
-});
-
 
 app.post('/api/getMedia', (req, res) => {        
     url = req.body.url;
     let isValidLink = ytService.isVideoValid(url);
+    let savedFileName = ytService.getVideoId(url) + '.mp4';
     if (isValidLink) {
-        startToDownloadVideo(url);
-    }
+        startToDownloadVideo(url);        
+    }    
     res.send(JSON.stringify({
         isValid: isValidLink,
-        getEmbedSrcLink: isValidLink? ytService.getEmbedSrcLink(url) : '',
+        getEmbedSrcLink: isValidLink? ytService.getEmbedSrcLink(url) : savedFileName,        
         isDead: false
     }));
 });

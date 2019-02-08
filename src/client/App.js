@@ -46,10 +46,11 @@ export default class App extends Component {
     let video = '';
     if (this.state.isLinkValid) {
       if (!this.state.isDead) {
-        video = <iframe src={this.state.getEmbedSrcLink} />;
+        video = <iframe className="videoPlayer" src={this.state.getEmbedSrcLink} />;
       } else {
-        video = <video controls>
-          <source src={`/api/getDownloadedVideo?link=${this.state.mainInputValue}`} type="video/mp4" />
+        let link = `${window.location.host}/videos/${this.state.getEmbedSrcLink}`;
+        video = <video className="videoPlayer" controls>
+          <source src={link} type="video/mp4" />
         </video>;
       }
     }
